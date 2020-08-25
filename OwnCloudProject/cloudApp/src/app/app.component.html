@@ -1,0 +1,8 @@
+<form action="/api/upload" method="post" enctype="multipart/form-data">
+  <label for="path">Ruta del archivo:</label>
+  <input (change)="fileChange($event)" type="file" name="files" id="input"  multiple>
+  <br>
+  <input type="submit" value="Subir" (click)='upload()'>
+
+
+</form>

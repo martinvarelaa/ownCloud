@@ -1,0 +1,29 @@
+const express = require('express')
+const app = express()
+const port = 3000
+const bodyParser = require("body-parser");
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart({
+    uploadDir: './uploads'
+});
+
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.get('/api/upload', function(req,res) {
+    return res.send("Esperando archivos para ser recibidos y preocesados")
+})
+app.post('/api/upload', multipartMiddleware, (req, res) => {
+    console.log(req.body)
+    res.json(
+        
+        {
+        'message': 'File uploaded succesfully.'
+        }
+    );
+});
+
+app.listen(port, () => console.log(`Puerto:  ${port}!`)) 
