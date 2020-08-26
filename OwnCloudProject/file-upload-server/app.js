@@ -15,22 +15,17 @@ const upload = multer({ storage: storage });
 const path = require('path');
 const fs = require('fs');
 const  directory = path.join('./uploads');
-var jsonFileNames;
+var arrayFileNames;
 
 fs.readdir(directory, function (err, files) {
 
   if (err) {
         return console.log('Imposible de escanear la carpeta!')
   } else{
-    console.log('El directorio: ' + directory + ' tiene  los siguientes archivos; ' )
+        arrayFileNames = files;
+  
 
-
-    files.forEach(function (file) {
-      console.log(file);
-      
-    });
-
-     jsonFileNames = JSON.stringify(files);
+     
     
 
   }
@@ -53,14 +48,14 @@ app.post( '/api/upload',  upload.any(), (req, res, next) => {
     res.json(
         
         {
-        'message': 'File uploaded succesfully.'
+        'message': `El archivo se encuentra en ${directory}`
         }
     );
 });
 
 app.post( '/api/list',  (req, res, next) => {
     
-  res.send(jsonFileNames);
+  res.send(arrayFileNames);
 });
 
 

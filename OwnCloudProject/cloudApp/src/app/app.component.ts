@@ -11,17 +11,26 @@ export class AppComponent {
 
   title = 'cloudApp';
   public uploadedFiles : Array < File >;
+  public directoryFiles : Array < string > ;
+
+    
+  
 
 constructor(private _http : HttpClient){
 
+this.directoryFiles = [];
+this._http.post('/api/list', null)
+.subscribe((response) => {
+      this.directoryFiles = Object.values(response);
+      
+});
 
 }
 
 
 public fileChange(element){
-  
 this.uploadedFiles = element.target.files;
-console.log('Array updated!')
+console.log('Archivo seleccionado correctamente!')
   
 }
 
@@ -34,16 +43,10 @@ public upload() {
   }
   this._http.post('/api/upload', formData)
   .subscribe((response) => {
-       console.log('response received is ', response);
+       console.log( response);
   });
 
 
-  this._http.post('/api/list', null)
-  .subscribe((response) => {
-       var jsonFilenames = response;
-       console.log(jsonFilenames);
-       
-  });
 }
   
 }
