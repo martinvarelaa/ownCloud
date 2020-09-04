@@ -15,22 +15,7 @@ const upload = multer({ storage: storage });
 const path = require('path');
 const fs = require('fs');
 const  directory = path.join('./uploads');
-var arrayFileNames;
 
-fs.readdir(directory, function (err, files) {
-
-  if (err) {
-        return console.log('Imposible de escanear la carpeta!')
-  } else{
-        arrayFileNames = files;
-  
-
-     
-    
-
-  }
-  
-});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -55,7 +40,7 @@ app.post( '/api/upload',  upload.any(), (req, res, next) => {
 
 app.post( '/api/list',  (req, res, next) => {
     
-  res.send(arrayFileNames);
+  res.send(fs.readdirSync("./uploads"));
 });
 
 

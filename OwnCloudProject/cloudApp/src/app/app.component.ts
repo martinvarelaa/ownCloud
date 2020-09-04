@@ -19,14 +19,12 @@ export class AppComponent {
 constructor(private _http : HttpClient){
 
 this.directoryFiles = [];
-this._http.post('/api/list', null)
-.subscribe((response) => {
-      this.directoryFiles = Object.values(response);
-      
-});
+  this.updateDirList();
 
 }
 
+
+  
 
 public fileChange(element){
 this.uploadedFiles = element.target.files;
@@ -46,7 +44,17 @@ public upload() {
        console.log( response);
   });
 
+  this.updateDirList();
 
+
+}
+
+private updateDirList() {
+  this._http.post('/api/list', null)
+    .subscribe((response) => {
+      this.directoryFiles = Object.values(response);
+
+    });
 }
   
 }
