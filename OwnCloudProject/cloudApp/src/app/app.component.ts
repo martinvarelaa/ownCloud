@@ -10,8 +10,9 @@ export class AppComponent {
   
 
   title = 'cloudApp';
-  public uploadedFiles : Array < File >;
+  public selectedFiles : Array < File >;
   public directoryFiles : Array < string > ;
+  public toDeleteFiles : any ;
 
     
   
@@ -19,29 +20,26 @@ export class AppComponent {
 constructor(private _http : HttpClient){
 
 this.directoryFiles = [];
+this.toDeleteFiles = "Unidad1.pdf";
   this.updateDirList();
-
 }
 
-
-  
-
 public fileChange(element){
-this.uploadedFiles = element.target.files;
+this.selectedFiles = element.target.files;
 console.log('Archivo seleccionado correctamente!')
   
 }
 
 public upload() {
   let formData = new FormData();
-  for (var i = 0; i < this.uploadedFiles.length; i++) {
+  for (var i = 0; i < this.selectedFiles.length; i++) {
     
-      formData.append("uploads[]", this.uploadedFiles[i], this.uploadedFiles[i].name);
+      formData.append("uploads[]", this.selectedFiles[i], this.selectedFiles[i].name);
       
   }
   this._http.post('/api/upload', formData)
   .subscribe((response) => {
-       console.log( response);
+      console.log(response);
   });
 
   this.updateDirList();
@@ -49,14 +47,16 @@ public upload() {
 
 }
 
-private updateDirList() {
+public updateDirList() {
   this._http.post('/api/list', null)
     .subscribe((response) => {
       this.directoryFiles = Object.values(response);
 
     });
 }
-  
+
+
+
 }
 
 

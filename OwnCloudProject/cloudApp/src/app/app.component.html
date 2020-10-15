@@ -1,9 +1,12 @@
 <form action="/api/upload" method="post" enctype="multipart/form-data">
-    <label for="path">Ruta del archivo:</label>
-    <input (change)="fileChange($event)" type="file" name="files" id="input"  multiple>
-    <br>
+  <label for="path">Archivo:</label>
+  <input (change)="fileChange($event)" type="file" name="files" id="input"  multiple>
+  <br>
   <input type="submit" value="Subir" (click)='upload()'>
+  <input type="button" value="Refrescar" (click)='updateDirList()'>
 </form>
+
+
 
 <br>  
 <hr>
@@ -12,7 +15,11 @@
 <div *ngIf="directoryFiles.length != 0  ">
 
   <ul>
-    <li *ngFor="let file of directoryFiles">{{file}}</li>
+    <div *ngFor="let file of directoryFiles">
+      <button class="buttonFile" >{{file}}</button>
+      <button class="buttonDelete" (click)='delete($event)'>Delete</button>
+    </div>
+    
   </ul>
 
 
